@@ -6,6 +6,16 @@
 
 A second brain that runs on your conversations.
 
+**[Skip reading, give this to my agent →](#the-easy-way-give-this-to-your-agent)**
+
+[What you get](#what-you-get) ·
+[Setup by hand](#setup-by-hand) ·
+[Asking it things](#asking-it-things) ·
+[Keeping it private](#keeping-your-vault-private-and-backed-up) ·
+[How it decides what to keep](#how-it-decides-what-to-keep) ·
+[In-person recordings](#in-person-recordings-optional) ·
+[What's in here](#whats-in-here)
+
 You already say your best ideas out loud, on calls and in meetings. flux pulls
 those transcripts in and has an agent turn them into a linked wiki: one page
 per idea, a page for every person, company and project, a running list of what
