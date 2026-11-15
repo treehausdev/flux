@@ -1,24 +1,20 @@
-# Search index for the wiki, used by `npm run index` and by the agent when you
-# ask a question. Only processed pages are indexed: raw transcripts stay out,
-# so a search can only reach what has already been through ingest.
-#
-# The index itself (.qmd/index.sqlite) is built on your machine and is not
-# part of this repository.
 global_context: "A second brain: atomic idea pages and entity pages distilled from the owner's conversations."
 collections:
   wiki:
     path: ./brain/wiki
     pattern: "**/*.md"
-    # Pages about your private life live in wiki/personal and stay out of
-    # everyday search. Ask about them by name: `qmd search -c personal ...`
     ignore:
-      - "personal/**"
+      - personal/**
     context:
-      "/": "Idea pages. One idea per page, in the owner's words, with a Sources footer naming the conversation it came from."
-      "/entities": "Entity pages: people, organizations, the owner's ventures, and markets. Each has dated Status lines and links to related idea pages."
+      /: Idea pages. One idea per page, in the owner's words, with a Sources footer naming the conversation it came from.
+      /entities: "Entity pages: people, organizations, the owner's ventures, and markets. Each has dated Status lines and links to related idea pages."
   personal:
     path: ./brain/wiki/personal
     pattern: "**/*.md"
     includeByDefault: false
     context:
-      "/": "Private pages: health, family, money. Searched only when asked for by name."
+      /: "Private pages: health, family, money. Searched only when asked for by name."
+models:
+  embed: hf:ggml-org/embeddinggemma-300M-GGUF/embeddinggemma-300M-Q8_0.gguf
+  generate: hf:tobil/qmd-query-expansion-1.7B-gguf/qmd-query-expansion-1.7B-q4_k_m.gguf
+  rerank: hf:ggml-org/Qwen3-Reranker-0.6B-Q8_0-GGUF/qwen3-reranker-0.6b-q8_0.gguf
