@@ -1,0 +1,8 @@
+# Your vault is private. It lives here but is never part of this repo.
+# Back it up as its own private git repo (see README).
+/brain/
+
+.env
+node_modules/
+.DS_Store
+*.tsbuildinfo

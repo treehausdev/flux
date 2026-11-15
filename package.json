@@ -1,0 +1,20 @@
+{
+  "name": "flux",
+  "private": true,
+  "type": "module",
+  "description": "A second brain that runs on your conversations: sync transcripts, then have an agent turn them into a linked wiki.",
+  "scripts": {
+    "init": "tsx scripts/init.ts",
+    "sync": "npm run sync:granola && npm run sync:pocket",
+    "sync:granola": "tsx scripts/granola-sync.ts",
+    "sync:pocket": "tsx scripts/pocket-sync.ts",
+    "triage": "tsx scripts/triage.ts",
+    "backfill": "tsx scripts/backfill-frontmatter.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
