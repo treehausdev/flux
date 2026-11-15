@@ -7,7 +7,7 @@ any ingest. If it is still the empty template, ask the owner to fill it in first
 
 ## Structure
 
-- The vault lives in `brain/` (an Obsidian vault, and its own private git repo)
+- The vault lives in `brain/` (an Obsidian style vault, and its own private git repo)
 - `brain/raw/<source>/` holds unprocessed sources (granola, pocket);
   ingested ones move to `brain/raw/<source>/processed`
 - `brain/wiki` contains processed atomic pages
