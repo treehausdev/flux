@@ -23,7 +23,69 @@ Named for the flux capacitor.
   what's scheduled, updated every time new conversations come in.
 - **An index and a log**, so you can see what's in there and when it arrived.
 
-## Setup
+## The easy way: give this to your agent
+
+Open [Claude Code](https://claude.com/claude-code) in the folder where you keep
+projects, paste the block below, and it will walk you through the whole setup.
+It takes about fifteen minutes, most of it answering a few questions about yourself.
+
+````text
+Set up flux for me. It's a second brain built from my meeting transcripts:
+https://github.com/treehausdev/flux
+
+Walk me through it one step at a time, and wait for me at each step that needs me.
+
+1. Check I have Node.js 20 or later and git. If something is missing, tell me
+   how to install it and stop until I have.
+
+2. Clone https://github.com/treehausdev/flux into a folder called flux, run
+   `npm install`, then `npm run init`. Read README.md and CLAUDE.md in the
+   repo before going further. CLAUDE.md is the rulebook you'll follow.
+
+3. Granola key. Tell me to open the Granola desktop app, go to Settings ->
+   Connectors -> API keys, and create a key with the "Personal notes" scope.
+   I'll put it in the .env file myself: do not ask me to paste the key into
+   this chat, and never print the contents of .env. Tell me exactly which
+   line to edit (GRANOLA_KEY_PERSONAL=) and to set FLUX_OWNER to my first
+   name. Wait until I say it's saved.
+
+4. Interview me to fill in brain/CONTEXT.md. Ask about one section at a time:
+   who I am and what I do, my projects or ventures, the markets I work in,
+   the people I work with most, how I like to write, and anything that
+   should never be filed (medical, family, a confidential client). Write my
+   answers into the file in my words, then show it to me and let me correct it.
+
+5. Run `npm run sync:granola -- --limit 5` so we start with only my five most
+   recent meetings. Tell me what came in, by title and date.
+
+6. Ingest those, following CLAUDE.md exactly. Triage first, and ask me once,
+   up front, about anything you're unsure of. Don't delete anything without
+   asking me.
+
+7. When it's done, show me what you made: the idea pages, the people and
+   organization pages, and brain/TODO.md. Pick the two best idea pages and
+   show them to me in full. Ask me what's wrong with them, and fix it.
+
+8. Help me open the brain/ folder as a vault in Obsidian. If I don't have
+   Obsidian, tell me where to get it; it's optional.
+
+9. Back up my vault. Explain that brain/ is private and is not part of the
+   flux repo. With my permission, make brain/ its own git repository and
+   push it to a new PRIVATE GitHub repo. Check that it's private before you
+   push, and tell me the name you used.
+
+10. Finish by telling me the two commands I'll use from now on: sync, then
+    "ingest". Then ask whether I want the rest of my meetings pulled in now.
+
+Rules for you throughout: keep everything from my vault out of the flux repo's
+own files and commits. Don't run more than the five-meeting sync until step 10.
+If any step fails, show me the error and what you think it means before trying a fix.
+````
+
+The agent does the typing; you answer the questions and paste one API key
+into a file. If you'd rather do it by hand, the steps follow.
+
+## Setup by hand
 
 You need [Node.js](https://nodejs.org) 20 or later, [Claude Code](https://claude.com/claude-code),
 and a [Granola](https://granola.ai) account with some recorded meetings.
