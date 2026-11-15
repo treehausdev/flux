@@ -1,7 +1,7 @@
 # flux
 
 <p align="left">
-  <img src="assets/flux-capacitor.svg" alt="A hand sketch of a flux capacitor: three tubes meeting in a Y inside a box" width="260">
+  <img src="assets/sketch.svg" alt="A hand sketch of a flux capacitor: three tubes meeting in a Y inside a box" width="260">
 </p>
 
 > “This is what makes time travel possible: the flux capacitor!”
