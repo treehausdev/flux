@@ -6,7 +6,7 @@
 
 > “This is what makes time travel possible: the flux capacitor!”
 >
-> — **Doc Brown**, *Back to the Future* (1985), explaining his invention to Marty McFly.
+> — **Doc Brown**, *Back to the Future* (1985)
 
 A second brain that runs on your conversations.
 
