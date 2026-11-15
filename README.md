@@ -4,6 +4,10 @@
   <img src="assets/flux-capacitor.svg" alt="A hand sketch of a flux capacitor: three tubes meeting in a Y inside a box" width="260">
 </p>
 
+> “This is what makes time travel possible: the flux capacitor!”
+>
+> — **Doc Brown**, *Back to the Future* (1985), explaining his invention to Marty McFly.
+
 A second brain that runs on your conversations.
 
 - **[Skip reading, give this to my agent →](#the-easy-way-give-this-to-your-agent)**
@@ -25,7 +29,7 @@ agent is whichever coding agent you already use; it was built with
 [Claude Code](https://claude.com/claude-code). The wiki can open in
 [Obsidian](https://obsidian.md) if you want. There is no app and nothing to host.
 
-Named for the flux capacitor, the thing that makes time travel possible.
+Named for the flux capacitor.
 
 ## What you get
 

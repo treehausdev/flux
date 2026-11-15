@@ -1,10 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 306" width="320" height="306" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 296" width="320" height="296" role="img" aria-labelledby="t d">
   <title id="t">A hand sketch of a flux capacitor</title>
   <desc id="d">Three tubes meeting in a Y inside a box, drawn as a rough pencil sketch.</desc>
   <style>
     .ink { fill: none; stroke: #8b9099; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
     .thin { stroke-width: 1.4; }
-    .note { font: italic 13px Georgia, 'Times New Roman', serif; fill: #8b9099; }
   </style>
 
   <!-- the box, drawn twice and slightly off, the way a quick sketch is -->
@@ -28,6 +27,4 @@
   <path class="ink" d="M152 150 c3 -7, 13 -8, 17 -2 c4 6, 0 14, -8 14 c-7 0, -11 -6, -9 -12"/>
   <path class="ink thin" d="M127 150 l-9 -3 M193 150 l9 -3 M160 122 l0 -9 M138 172 l-6 7 M182 172 l6 7"/>
 
-  <!-- margin note -->
-  <text class="note" x="160" y="291" text-anchor="middle">it's what makes it work</text>
 </svg>
