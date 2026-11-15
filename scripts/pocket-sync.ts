@@ -86,7 +86,7 @@ function tagNames(rec: Json): Set<string> {
 /**
  * `self` = I'm a participant. `observed` = I'm recording other people — a
  * training room, a workshop, someone else's session. Decided by Pocket tag
- * because that's where I have the context; see CLAUDE.md > Capture.
+ * because that's where I have the context; see AGENTS.md > Capture.
  */
 function classifyCapture(rec: Json, observedTags: Set<string>): "self" | "observed" {
   for (const tag of tagNames(rec)) if (observedTags.has(tag)) return "observed";
@@ -96,7 +96,7 @@ function classifyCapture(rec: Json, observedTags: Set<string>): "self" | "observ
 /**
  * Granola only fires on scheduled calls, so everything it captured was worth
  * a page. Pocket hears hallway chat, car rides and small talk too. `disposition`
- * tells INGEST how much of the machinery to run — see CLAUDE.md > POCKET TRIAGE.
+ * tells INGEST how much of the machinery to run — see AGENTS.md > TRIAGE FOR AMBIENT RECORDINGS.
  * Short recordings default to log-only rather than being dropped, because a
  * four-minute call can still be the one that moves a deal.
  */
@@ -217,14 +217,14 @@ function writeRecording(
   const notes: string[] = [];
   if (capture === "observed") {
     notes.push(
-      "> Captured in a room of other people. Per CLAUDE.md > OBSERVED CAPTURES:",
+      "> Captured in a room of other people. Per AGENTS.md > OBSERVED CAPTURES:",
       "> extract ideas and program-level status, attribute quotes to the speaker,",
       "> and do not write assessments of named individuals into the wiki.",
     );
   }
   if (disposition === "triage") {
     notes.push(
-      "> Short recording. Per CLAUDE.md > POCKET TRIAGE: decide page-worthy vs",
+      "> Short recording. Per AGENTS.md > TRIAGE FOR AMBIENT RECORDINGS: decide page-worthy vs",
       "> log-only vs discard before extracting anything.",
     );
   }

@@ -1,6 +1,6 @@
 # Open loops
 
-Updated at ingest, never as a sweep across raw files. See OPEN LOOPS in CLAUDE.md.
+Updated at ingest, never as a sweep across raw files. See OPEN LOOPS in AGENTS.md.
 
 ## I owe
 

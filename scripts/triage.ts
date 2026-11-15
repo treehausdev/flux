@@ -4,7 +4,7 @@
  * INGEST reads this first so it can decide what deserves pages *before* it
  * starts reading whole transcripts — and so anything it can't confidently
  * classify gets batched into one question instead of a guess. See
- * CLAUDE.md > INGEST step 0.
+ * AGENTS.md > INGEST step 0.
  *
  * This only computes deterministic signals (duration, tags, word count, which
  * speakers match existing entity pages). Whether a conversation is actually
