@@ -1,5 +1,9 @@
 # flux
 
+<p align="center">
+  <img src="assets/flux-capacitor.svg" alt="A hand sketch of a flux capacitor: three tubes meeting in a Y inside a box" width="260">
+</p>
+
 A second brain that runs on your conversations.
 
 You already say your best ideas out loud, on calls and in meetings. flux pulls
@@ -8,10 +12,10 @@ per idea, a page for every person, company and project, a running list of what
 you owe and what you're waiting on. You never take a note.
 
 It is a folder of markdown, an instruction file, and a few small scripts. The
-agent is [Claude Code](https://claude.com/claude-code). The wiki opens in
-[Obsidian](https://obsidian.md). There is no app and nothing to host.
+agent is [Claude Code](https://claude.com/claude-code). The wiki can open in
+[Obsidian](https://obsidian.md) if you want. There is no app and nothing to host.
 
-Named for the flux capacitor.
+Named for the flux capacitor, the thing that makes time travel possible.
 
 ## What you get
 
