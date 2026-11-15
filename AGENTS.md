@@ -49,9 +49,12 @@ Keys live in `.env`, one per account.
 - Pocket in-person recordings (optional): `npm run sync:pocket`
   (`POCKET_KEY_*`). Adds `source: pocket`, `medium: in-person`, `speakers:`,
   `tags:`, `duration_seconds:`, plus `capture:` and `disposition:`.
-- After an ingest, `npm run backfill` refreshes the queryable
-  `first_seen` / `last_seen` / `sources` / `media` frontmatter on idea
-  pages from their Sources footers. Safe to run repeatedly.
+- After an ingest, `npm run backfill -- --apply` refreshes the queryable
+  frontmatter on idea pages: `first_seen` / `last_seen` / `sources` / `media`
+  from their Sources footers, and `ventures` from which venture pages link to
+  them. Safe to run repeatedly.
+- `npm run index` refreshes the search index ([qmd](https://github.com/tobi/qmd))
+  over `brain/wiki`. Run it after every ingest so new pages can be found.
 
 ## Capture
 
@@ -109,6 +112,9 @@ Absent `capture:`, assume **self**.
    contains, and close any open item the source shows is done. The same
    read pass does both.
 9. Move the source to `raw/<source>/processed`
+10. When the whole batch is done: `npm run backfill -- --apply`, then
+   `npm run index`, so the new pages carry their frontmatter and show up in
+   search. If qmd isn't installed, skip the index step and say so once.
 
 ## TRIAGE FOR AMBIENT RECORDINGS — when a source came from a wearable
 
@@ -199,15 +205,33 @@ a call that the rules above say to ask about.
 4. Add one line to `brain/TODO.md` under **Scheduled**:
    `- [ ] Review N held recording(s) in raw (<date>)`, replacing any earlier
    line of the same kind, so the owner sees them next time they open it.
-5. Append to `log.md` as usual, noting the run was unattended.
+5. Append to `log.md` as usual, noting the run was unattended. Then run
+   `npm run backfill -- --apply` and `npm run index`.
 6. If the vault is a git repository, commit. Push only if a remote is set up.
 
 If anything fails, stop and write the error to `log.md`. Don't retry in a loop.
 
 ## QUERY — when the owner asks a question:
 
-- Search the entire `wiki` before answering
-- Cite which pages support your answer
+Answering should feel like asking someone who has read everything: quick, and
+straight to the point. Don't narrate the search or list what you looked at.
+
+- **Find the pages with qmd first.** If you have the qmd tools, use them.
+  Otherwise use the command line from this folder:
+  - `qmd search "<names or exact terms>" -n 8` for a person, company, project
+    or phrase. Instant.
+  - `qmd vsearch "<the question in plain words>" -n 8` when the wording may
+    differ from the page. A couple of seconds.
+  - Run both when unsure. `qmd query` (search, expand and rerank) is slower;
+    use it only when the first two miss.
+  - Narrow to one project by adding its name to the query; idea pages carry a
+    `ventures:` field.
+- Read the top few pages in full before answering. A search hit is a pointer,
+  not the answer.
+- If qmd isn't installed or the index is empty, fall back to searching
+  `brain/wiki` directly, and mention once that `npm run index` would make
+  this faster.
+- Lead with the answer. Then cite the pages that support it as [[wikilinks]].
 - If pages conflict, surface the conflict
 - File the answer back as a new page if it's worth keeping
 

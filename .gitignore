@@ -3,6 +3,9 @@
 /brain/
 
 .env
+
+# The search index is built locally from your vault.
+.qmd/index.sqlite*
 node_modules/
 .DS_Store
 *.tsbuildinfo

@@ -1,5 +1,5 @@
 /**
- * Add queryable date/source frontmatter to wiki idea pages.
+ * Add queryable date, source and venture frontmatter to wiki idea pages.
  *
  * Every idea page ends with a prose footer like:
  *
@@ -47,10 +47,41 @@ function mediaOf(footer: string): string[] {
   if (/granola transcript/.test(low)) media.push("granola");
   if (/pocket recording/.test(low)) media.push("pocket");
   if (/teams transcript/.test(low)) media.push("teams");
+  if (/\bdocument\b|\bpdf\b/.test(low)) media.push("document");
+  if (/\bvideo\b|youtube/.test(low)) media.push("video");
+  if (/told directly|\btext from\b|imessage/.test(low)) media.push("direct");
   return media.length ? media : ["unknown"];
 }
 
-function parse(path: string): { front: string; body: string; fields: Fields; text: string } | null {
+const LINK = /\[\[([^\]|#]+)(?:[|#][^\]]*)?\]\]/g;
+const linksIn = (text: string): string[] => [...text.matchAll(LINK)].map((m) => m[1]!.trim());
+const titleOf = (path: string): string => path.slice(path.lastIndexOf("/") + 1).replace(/\.md$/, "");
+
+/**
+ * Which of the owner's ventures each idea page belongs to. A page belongs to
+ * a venture when the venture's entity page links to it, or when it links to
+ * the venture itself. Written to frontmatter as `ventures:` so a search can
+ * be narrowed to one project, and so another project's agent can be handed
+ * only its own pages.
+ */
+function ventureMap(paths: string[]): { names: Set<string>; byIdea: Map<string, Set<string>> } {
+  const names = new Set<string>();
+  const byIdea = new Map<string, Set<string>>();
+  for (const path of paths) {
+    if (!path.includes("/entities/")) continue;
+    const text = readFileSync(path, "utf8");
+    if (!/^type:\s*venture\s*$/m.test(text.slice(0, 300))) continue;
+    const venture = titleOf(path);
+    names.add(venture);
+    for (const linked of linksIn(text)) {
+      if (!byIdea.has(linked)) byIdea.set(linked, new Set());
+      byIdea.get(linked)!.add(venture);
+    }
+  }
+  return { names, byIdea };
+}
+
+function parse(path: string, ventures: ReturnType<typeof ventureMap>): { front: string; body: string; fields: Fields; text: string } | null {
   const text = readFileSync(path, "utf8");
   if (!text.startsWith("---")) return null;
   const end = text.indexOf("---", 3);
@@ -66,6 +97,15 @@ function parse(path: string): { front: string; body: string; fields: Fields; tex
   if (dates.length === 0) return null;
 
   const titles = [...footer.matchAll(QUOTED)].length;
+  // If the footer names a medium we don't recognise, keep whatever the page
+  // already says rather than overwriting it with "unknown".
+  const detected = mediaOf(footer);
+  const existing = /^media:\s*(.+)$/m.exec(front)?.[1]?.trim();
+  const media = detected[0] === "unknown" && existing && existing !== "unknown" ? existing : detected.join(", ");
+
+  const mine = new Set(ventures.byIdea.get(titleOf(path)) ?? []);
+  for (const linked of linksIn(body)) if (ventures.names.has(linked)) mine.add(linked);
+
   return {
     front,
     body,
@@ -74,7 +114,8 @@ function parse(path: string): { front: string; body: string; fields: Fields; tex
       first_seen: dates[0]!,
       last_seen: dates.at(-1)!,
       sources: String(Math.max(titles, dates.length)),
-      media: mediaOf(footer).join(", "),
+      media,
+      ventures: [...mine].sort().join(", "),
     },
   };
 }
@@ -86,7 +127,9 @@ function render(front: string, fields: Fields): string {
     const key = line.split(":")[0]?.trim();
     return !key || !managed.has(key);
   });
-  const entries = Object.entries(fields).map(([k, v]) => `${k}: ${v}`);
+  // An empty value means "remove this key": a page that no longer belongs to
+  // any venture shouldn't keep a stale one.
+  const entries = Object.entries(fields).filter(([, v]) => v !== "").map(([k, v]) => `${k}: ${v}`);
   return [...kept, ...entries].join("\n");
 }
 
@@ -96,8 +139,10 @@ function main() {
   const changed: Array<[string, Fields]> = [];
   const skipped: string[] = [];
 
-  for (const path of walk(WIKI).sort()) {
-    const parsed = parse(path);
+  const all = walk(WIKI).sort();
+  const ventures = ventureMap(all);
+  for (const path of all) {
+    const parsed = parse(path, ventures);
     if (!parsed) {
       if (!path.includes(`${"entities"}/`)) skipped.push(path);
       continue;

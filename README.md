@@ -61,11 +61,13 @@ Whenever you need a decision or an answer from me, use your ask-the-user or
 question tool if you have one, so I can pick from options instead of typing.
 Give me sensible choices and always let me write my own answer.
 
-1. Check I have Node.js 20 or later and git. If something is missing, tell me
+1. Check I have Node.js 22 or later and git. If something is missing, tell me
    how to install it and stop until I have.
 
 2. Clone https://github.com/treehausdev/flux into a folder called flux, run
-   `npm install`, then `npm run init`. Read README.md and AGENTS.md in the
+   `npm install`, then `npm run init`. Install the search tool with
+   `npm install -g @tobilu/qmd` (on a Mac it also needs `brew install sqlite`).
+   Tell me it will download a small model, about 300 MB, the first time it runs. Read README.md and AGENTS.md in the
    repo before going further. AGENTS.md is the rulebook you'll follow.
 
 3. Granola key. Tell me to open the Granola desktop app, go to Settings ->
@@ -89,7 +91,7 @@ Give me sensible choices and always let me write my own answer.
    up front, about anything you're unsure of. Don't delete anything without
    asking me.
 
-7. When it's done, show me what you made: the idea pages, the people and
+7. Run `npm run index` so the new pages are searchable. Then show me what you made: the idea pages, the people and
    organization pages, and brain/TODO.md. Pick the two best idea pages and
    show them to me in full. Ask me what's wrong with them, and fix it.
 
@@ -103,6 +105,9 @@ Give me sensible choices and always let me write my own answer.
 
 10. Finish up:
     a. Tell me the two things I'll do from now on: sync, then say "ingest".
+       And that I can just ask questions, like "what did we decide about
+       pricing?". Ask me one now, from something in my five meetings, so I
+       can see how fast it answers.
     b. Ask whether I want the rest of my meetings pulled in now.
     c. Recommend that flux keeps itself up to date every hour, and ask me
        whether to set that up. Explain the two halves: an hourly sync is
@@ -125,7 +130,7 @@ into a file. If you'd rather do it by hand, the steps follow.
 
 ## Setup by hand
 
-You need [Node.js](https://nodejs.org) 20 or later, a coding agent such as
+You need [Node.js](https://nodejs.org) 22 or later, a coding agent such as
 [Claude Code](https://claude.com/claude-code), and a [Granola](https://granola.ai) account with some recorded meetings.
 
 ```sh
@@ -196,6 +201,25 @@ In your agent, in this folder:
 
 Answers cite the pages they came from.
 
+### Making it fast
+
+Questions are answered through [qmd](https://github.com/tobi/qmd), a search
+engine for markdown that runs entirely on your machine. It finds pages by
+meaning as well as by keyword, so "charge for the result, not the hours" finds
+your page on outcome pricing even if it never uses those words.
+
+```sh
+npm install -g @tobilu/qmd     # on a Mac, also: brew install sqlite
+npm run index                  # after each ingest
+```
+
+The first run downloads a model of about 300 MB. Nothing leaves your computer.
+Only `brain/wiki` is indexed; your raw transcripts are not. Without qmd,
+everything still works, and the agent searches the files directly.
+
+Claude Code picks the search tools up automatically from `.mcp.json` and will
+ask once whether to allow them. Other agents use the `qmd` command.
+
 ## Keeping your vault private and backed up
 
 `brain/` is ignored by this repository. Nothing in it can be committed here by
@@ -237,6 +261,8 @@ than a meeting recorder, so these go through stricter triage. Tag a recording
 
 ```
 AGENTS.md            the schema: every rule the agent follows
+.qmd/index.yml       what the search index covers
+.mcp.json            gives Claude Code the search tools
 CLAUDE.md            one line pointing Claude Code at AGENTS.md
 scripts/             sync, triage and backfill (TypeScript, no build step)
 template/brain/      the empty vault that `npm run init` copies

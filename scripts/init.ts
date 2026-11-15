@@ -5,6 +5,7 @@
  *   npm run init
  */
 
+import { spawnSync } from "node:child_process";
 import { cpSync, existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { REPO_ROOT, VAULT_DIR, relative } from "./lib.ts";
@@ -22,6 +23,10 @@ if (!existsSync(join(REPO_ROOT, ".env"))) {
   cpSync(join(REPO_ROOT, ".env.example"), join(REPO_ROOT, ".env"));
   console.log("Created .env from .env.example. Add your Granola key there.");
 }
+
+const hasQmd = spawnSync("qmd", ["--version"], { stdio: "ignore" }).status === 0;
+if (!hasQmd)
+  console.log("Search: qmd isn't installed yet. For fast answers, run: npm install -g @tobilu/qmd");
 
 console.log(`
 Next:
