@@ -98,10 +98,13 @@ Give me sensible choices and always let me write my own answer.
 8. Help me open the brain/ folder as a vault in Obsidian. If I don't have
    Obsidian, tell me where to get it; it's optional.
 
-9. Back up my vault. Explain that brain/ is private and is not part of the
-   flux repo. With my permission, make brain/ its own git repository and
-   push it to a new PRIVATE GitHub repo. Check that it's private before you
-   push, and tell me the name you used.
+9. Back up my vault. Explain that my notes live in brain/ and that the
+   safest setup is my own PRIVATE copy of this repo holding the engine and
+   brain/ together. With my permission, follow "Keeping your vault private
+   and backed up" in README.md: create a new private GitHub repo, make it
+   origin, keep the public flux repo as upstream with pushing disabled,
+   remove the /brain/ line from .gitignore, then commit and push. Confirm
+   the repo is private BEFORE the first push, and tell me its name.
 
 10. Finish up:
     a. Tell me the two things I'll do from now on: sync, then say "ingest".
@@ -120,8 +123,8 @@ Give me sensible choices and always let me write my own answer.
        command-line mode in this folder). Tell me exactly what you created
        and how to turn it off, and run it once now so we both see it work.
 
-Rules for you throughout: keep everything from my vault out of the flux repo's
-own files and commits. Don't run more than the five-meeting sync until step 10.
+Rules for you throughout: never push anything from my vault to a public
+repository, and never push to the public flux repo at all. Don't run more than the five-meeting sync until step 10.
 If any step fails, show me the error and what you think it means before trying a fix.
 ````
 
@@ -222,18 +225,38 @@ ask once whether to allow them. Other agents use the `qmd` command.
 
 ## Keeping your vault private and backed up
 
-`brain/` is ignored by this repository. Nothing in it can be committed here by
-accident. Back it up as its own **private** repository:
+Your notes are the valuable part, so back them up. The simplest way is to make
+your copy of flux a **private** repository of your own that holds everything:
+the engine and your `brain/` together.
 
 ```sh
-cd brain
-git init
-git add -A && git commit -m "Start"
-gh repo create my-brain --private --source . --push
+# 1. Make a private repo of your own and point this folder at it
+gh repo create my-flux --private
+git remote rename origin upstream
+git remote add origin git@github.com:YOUR-NAME/my-flux.git
+
+# 2. Make it impossible to push your notes to the public repo
+git remote set-url --push upstream DISABLED
+
+# 3. Let git track your vault, then save it
+#    (delete the "/brain/" line from .gitignore first)
+git add -A && git commit -m "Start my brain"
+git push -u origin main
 ```
 
-Your notes then live in one private repo, and the engine in this public one.
-To update the engine later: `git pull` in the outer folder.
+Check the new repo says **Private** on GitHub before you push.
+
+`brain/` is ignored in the public template so that nobody publishes their
+notes by accident. Removing that one line is what opts your private copy in.
+
+To pick up improvements to flux later:
+
+```sh
+git pull upstream main
+```
+
+Your notes live in `brain/` and the engine everywhere else, so updates don't
+touch them.
 
 ## How it decides what to keep
 
@@ -266,7 +289,7 @@ AGENTS.md            the schema: every rule the agent follows
 CLAUDE.md            one line pointing Claude Code at AGENTS.md
 scripts/             sync, triage and backfill (TypeScript, no build step)
 template/brain/      the empty vault that `npm run init` copies
-brain/               your vault (created by init; private; not in this repo)
+brain/               your vault (created by init; ignored here, tracked in your private copy)
 ```
 
 ## A note on other people

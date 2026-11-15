@@ -7,7 +7,8 @@ any ingest. If it is still the empty template, ask the owner to fill it in first
 
 ## Structure
 
-- The vault lives in `brain/` (an Obsidian style vault, and its own private git repo)
+- The vault lives in `brain/` (an Obsidian style vault). The owner keeps it
+  in a private copy of this repo, alongside the engine
 - `brain/raw/<source>/` holds unprocessed sources (granola, pocket);
   ingested ones move to `brain/raw/<source>/processed`
 - `brain/wiki` contains processed atomic pages
@@ -210,7 +211,8 @@ a call that the rules above say to ask about.
    line of the same kind, so the owner sees them next time they open it.
 5. Append to `log.md` as usual, noting the run was unattended. Then run
    `npm run backfill -- --apply` and `npm run index`.
-6. If the vault is a git repository, commit. Push only if a remote is set up.
+6. Commit the vault. Push only to `origin`, and only if `origin` is the
+   owner's private repository.
 
 If anything fails, stop and write the error to `log.md`. Don't retry in a loop.
 
@@ -255,4 +257,6 @@ straight to the point. Don't narrate the search or list what you looked at.
 - Write in the owner's voice, not the source's voice
 - Never lose source attribution
 - Surface non-obvious connections aggressively
-- Never put anything from `brain/` into this repo's own files or commits
+- The vault is private. Never push it to a public repository, never push to
+  the public flux repo (`upstream`), and never copy anything from `brain/`
+  into the engine's own files

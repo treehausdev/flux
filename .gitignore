@@ -1,5 +1,6 @@
-# Your vault is private. It lives here but is never part of this repo.
-# Back it up as its own private git repo (see README).
+# Your vault is private, so the public template ignores it.
+# In your own PRIVATE copy of this repo, delete the next line so your notes
+# are tracked and backed up (see "Keeping your vault private" in the README).
 /brain/
 
 .env
