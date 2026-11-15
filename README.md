@@ -29,8 +29,6 @@ agent is whichever coding agent you already use; it was built with
 [Claude Code](https://claude.com/claude-code). The wiki can open in
 [Obsidian](https://obsidian.md) if you want. There is no app and nothing to host.
 
-Named for the flux capacitor.
-
 ## What you get
 
 - **Idea pages.** Each one a single idea in your own words, linked to related
