@@ -4,6 +4,9 @@
 
 .env
 
+# Your own agent settings and skills stay local.
+/.claude/
+
 # The search index is built locally from your vault.
 .qmd/index.sqlite*
 node_modules/

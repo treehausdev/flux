@@ -9,6 +9,16 @@ collections:
   wiki:
     path: ./brain/wiki
     pattern: "**/*.md"
+    # Pages about your private life live in wiki/personal and stay out of
+    # everyday search. Ask about them by name: `qmd search -c personal ...`
+    ignore:
+      - "personal/**"
     context:
       "/": "Idea pages. One idea per page, in the owner's words, with a Sources footer naming the conversation it came from."
       "/entities": "Entity pages: people, organizations, the owner's ventures, and markets. Each has dated Status lines and links to related idea pages."
+  personal:
+    path: ./brain/wiki/personal
+    pattern: "**/*.md"
+    includeByDefault: false
+    context:
+      "/": "Private pages: health, family, money. Searched only when asked for by name."

@@ -15,7 +15,8 @@ any ingest. If it is still the empty template, ask the owner to fill it in first
 - `brain/log.md` is the chronological ingest history
 - `brain/TODO.md` is the running open-loops tracker (see OPEN LOOPS)
 - `brain/CONTEXT.md` is the owner's private context: who they are, their
-  ventures, markets, people, genres, and what must never be filed
+  ventures, markets, people, genres, what must never be filed, and any house
+  rules of their own. Where it is more specific than this file, it wins
 - This file is the schema. It contains nothing personal. It is named
   AGENTS.md so any coding agent picks it up; CLAUDE.md just points here.
 
@@ -31,7 +32,9 @@ Five node types. Every wiki page opens with YAML frontmatter declaring its `type
   ventures and links every venture, organization and idea competing or
   playing there (`wiki/entities`)
 - **idea** — an atomic idea page (`wiki`); also carries a `genre:`, one of
-  the genres listed in CONTEXT.md
+  the genres listed in CONTEXT.md. Pages about the owner's private life
+  (health, family, money) go in `wiki/personal/`, which is kept out of
+  everyday search
 
 Markets are the layer above ventures: when an idea is really a market thesis
 (a claim about the arena, not about one product), link it from the market
@@ -226,6 +229,8 @@ straight to the point. Don't narrate the search or list what you looked at.
     use it only when the first two miss.
   - Narrow to one project by adding its name to the query; idea pages carry a
     `ventures:` field.
+  - Private pages are a separate collection. Add `-c wiki -c personal` only
+    when the owner is asking about their own private life.
 - Read the top few pages in full before answering. A search hit is a pointer,
   not the answer.
 - If qmd isn't installed or the index is empty, fall back to searching

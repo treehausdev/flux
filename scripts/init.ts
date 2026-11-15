@@ -6,7 +6,7 @@
  */
 
 import { spawnSync } from "node:child_process";
-import { cpSync, existsSync, readdirSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { REPO_ROOT, VAULT_DIR, relative } from "./lib.ts";
 
@@ -16,6 +16,7 @@ if (existsSync(VAULT_DIR) && readdirSync(VAULT_DIR).length > 0) {
   console.log(`${relative(VAULT_DIR)}/ already exists. Leaving it alone.`);
 } else {
   cpSync(TEMPLATE, VAULT_DIR, { recursive: true });
+  mkdirSync(join(VAULT_DIR, "wiki", "personal"), { recursive: true });
   console.log(`Created ${relative(VAULT_DIR)}/ with an empty wiki, index, log and TODO.`);
 }
 

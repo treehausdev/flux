@@ -25,7 +25,11 @@ import {
 
 const API_BASE = "https://public.heypocketai.com/api/v1";
 const STATE_FILE = join(STATE_DIR, "pocket.json");
-const DEFAULT_OBSERVED_TAGS = ["observed", "training"];
+// Add your own with FLUX_OBSERVED_TAGS=tag,tag in .env.
+const DEFAULT_OBSERVED_TAGS = [
+  "observed", "training",
+  ...(process.env.FLUX_OBSERVED_TAGS ?? "").split(",").map((t) => t.trim().toLowerCase()).filter(Boolean),
+];
 // Never sync these at all. A wearable hears everything; the cheapest filter is
 // the one that runs before anything lands on disk.
 const DEFAULT_SKIP_TAGS = ["private", "personal", "skip", "medical"];
